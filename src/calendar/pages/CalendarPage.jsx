@@ -6,10 +6,11 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { getMessagesES, localizer } from '../../helpers'
 import { CalendarEvent } from '../components/CalendarEvent'
 import { useState } from 'react'
+import { CalendarModal } from '../components/CalendarModal'
 
 
 
-useState
+
 const events = [{
   title: 'Cumpleaños del Jefe',
   notes: 'Hay que comprar el pastel',
@@ -71,6 +72,7 @@ export const CalendarPage = () => {
         onSelectEvent={ onSelect}
         onView={ onViewChanged}
       />
+      <CalendarModal/>
     </>
   )
 }
