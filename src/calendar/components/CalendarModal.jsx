@@ -1,7 +1,7 @@
 // Importa funciones para manejar fechas desde la librería date-fns
 import { addHours, differenceInSeconds } from 'date-fns';
 // Importa hooks de React
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 // Importa el componente Modal para mostrar el formulario en un modal
 import Modal from 'react-modal';
 // Importa el componente DatePicker para seleccionar fechas
@@ -14,7 +14,7 @@ import { es } from 'date-fns/locale/es';
 import 'sweetalert2/dist/sweetalert2.min.css'
 import Swal from 'sweetalert2';
 // Importa el hook personalizado que maneja el estado de apertura del modal
-import { useUiStore } from '../../hooks';
+import { useCalendarStore, useUiStore } from '../../hooks';
 
 // Registra el idioma español en el DatePicker
 registerLocale('es', es)
@@ -39,14 +39,15 @@ export const CalendarModal = () => {
 
     // Obtiene del store si el modal está abierto y la función para cerrarlo
     const { isDateModalOpen, closeDateModal } = useUiStore();
+    const { activeEvent } = useCalendarStore();
 
     // Estado que indica si se intentó enviar el formulario
     const [fromSubmitted, setFormSubmitted] = useState(false);
 
     // Estado del formulario con valores por defecto
     const [formValues, setFormValues] = useState({
-        title: 'Chipy', // título inicial
-        notes: 'Stola', // notas iniciales
+        title: '', // título inicial
+        notes: '', // notas iniciales
         start: new Date(), // fecha de inicio: ahora
         end: addHours(new Date(), 2) // fecha de fin: ahora + 2 horas
     })
@@ -58,7 +59,10 @@ export const CalendarModal = () => {
             ? '' // si tiene título, sin clase
             : 'is-invalid' // si está vacío, muestra clase de error
     }, [formValues.title, fromSubmitted])
-
+    useEffect(() => {
+        if ( activeEvent !== null)
+            setFormValues({ ...activeEvent })
+    }, [activeEvent])
     // Maneja cambios en inputs de texto (title, notes)
     const onInputChanged = ({ target }) => {
         setFormValues({
