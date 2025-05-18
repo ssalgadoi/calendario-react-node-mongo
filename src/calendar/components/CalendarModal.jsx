@@ -39,7 +39,7 @@ export const CalendarModal = () => {
 
     // Obtiene del store si el modal está abierto y la función para cerrarlo
     const { isDateModalOpen, closeDateModal } = useUiStore();
-    const { activeEvent } = useCalendarStore();
+    const { activeEvent, startSavingEvent } = useCalendarStore();
 
     // Estado que indica si se intentó enviar el formulario
     const [fromSubmitted, setFormSubmitted] = useState(false);
@@ -85,7 +85,7 @@ export const CalendarModal = () => {
     }
 
     // Maneja el envío del formulario
-    const onSubmit = (event) => {
+    const onSubmit = async(event) => {
         event.preventDefault(); // evita el comportamiento por defecto (recargar)
         setFormSubmitted(true) // indica que se intentó enviar el formulario
 
@@ -103,6 +103,10 @@ export const CalendarModal = () => {
 
         // Aquí podrías hacer un dispatch al store o una petición al backend
         console.log(formValues);
+
+        await startSavingEvent( formValues );
+        closeDateModal()
+        setFormSubmitted( false )
     }
 
     // JSX que representa el contenido del modal
