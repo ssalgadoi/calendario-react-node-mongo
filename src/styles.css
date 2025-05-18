@@ -1,6 +1,5 @@
-
 /* Modal */
-.ReactModalPortal > div{
+.ReactModalPortal>div {
     opacity: 0;
 }
 
@@ -42,9 +41,20 @@
 
 .fab {
     border-radius: 100%;
-    bottom: 25px;
-    font-size: 30px;
-    padding: 25px;
+    bottom: 15px;
+    font-size: 20px;
     position: fixed;
-    right: 25px;
+    right: 75px;
+    width: 60px;
+    height: 60px;
+}
+
+.fab-danger {
+    border-radius: 100%;
+    bottom: 15px;
+    font-size: 20px;
+    position: fixed;
+    left: 75px;
+    width: 60px;
+    height: 60px;
 }
